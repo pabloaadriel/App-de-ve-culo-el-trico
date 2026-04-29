@@ -4,11 +4,6 @@ Plataforma de locação de carros elétricos para motoristas de aplicativos.
 
 ## 🚀 Como rodar
 
-```bash
-cd voltride
-npm install
-npm run dev
-```
 
 Acesse: http://localhost:5173
 
