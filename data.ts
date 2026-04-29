@@ -1,0 +1,176 @@
+import type { User, Reservation, Transaction, Notification, AnalyticsData, PricingConfig } from '../types';
+
+export const mockUsers: User[] = [
+  {
+    id: 'usr-001',
+    name: 'Carlos Souza',
+    email: 'carlos@voltride.com',
+    role: 'driver',
+    plan: 'basic',
+    freeChargesPerWeek: 1,
+    usedChargesThisWeek: 0,
+    balance: 450.0,
+    totalSaved: 1240.0,
+    joinedAt: '2024-01-15',
+  },
+  {
+    id: 'usr-adm',
+    name: 'Admin VoltRide',
+    email: 'admin@voltride.com',
+    role: 'admin',
+    plan: 'premium',
+    freeChargesPerWeek: 99,
+    usedChargesThisWeek: 0,
+    balance: 99999,
+    totalSaved: 0,
+    joinedAt: '2023-06-01',
+  },
+];
+
+export const mockReservations: Reservation[] = [
+  {
+    id: 'res-001',
+    userId: 'usr-001',
+    type: 'car',
+    resourceId: 'car-001',
+    resourceName: 'Tesla Model 3',
+    startTime: '2025-04-28T08:00:00',
+    endTime: '2025-05-05T08:00:00',
+    status: 'active',
+    totalCost: 980,
+    createdAt: '2025-04-25T10:00:00',
+  },
+  {
+    id: 'res-002',
+    userId: 'usr-001',
+    type: 'station',
+    resourceId: 'stn-001',
+    resourceName: 'VoltHub Centro',
+    startTime: '2025-04-29T14:00:00',
+    endTime: '2025-04-29T15:30:00',
+    status: 'pending',
+    totalCost: 0,
+    isFreeCharge: true,
+    createdAt: '2025-04-28T09:00:00',
+  },
+  {
+    id: 'res-003',
+    userId: 'usr-001',
+    type: 'car',
+    resourceId: 'car-003',
+    resourceName: 'Fiat Argo Electric',
+    startTime: '2025-04-14T08:00:00',
+    endTime: '2025-04-21T08:00:00',
+    status: 'completed',
+    totalCost: 760,
+    createdAt: '2025-04-10T11:00:00',
+  },
+];
+
+export const mockTransactions: Transaction[] = [
+  {
+    id: 'txn-001',
+    userId: 'usr-001',
+    type: 'charge',
+    amount: -980,
+    description: 'Reserva semanal — Tesla Model 3',
+    reservationId: 'res-001',
+    createdAt: '2025-04-25T10:00:00',
+  },
+  {
+    id: 'txn-002',
+    userId: 'usr-001',
+    type: 'charge',
+    amount: -760,
+    description: 'Reserva semanal — Fiat Argo Electric',
+    reservationId: 'res-003',
+    createdAt: '2025-04-10T11:00:00',
+  },
+  {
+    id: 'txn-003',
+    userId: 'usr-001',
+    type: 'deposit',
+    amount: 2000,
+    description: 'Depósito via Pix',
+    createdAt: '2025-04-08T09:30:00',
+  },
+  {
+    id: 'txn-004',
+    userId: 'usr-001',
+    type: 'charge',
+    amount: -108,
+    description: 'Recarga adicional — VoltHub Leste',
+    createdAt: '2025-04-20T16:45:00',
+  },
+];
+
+export const mockNotifications: Notification[] = [
+  {
+    id: 'ntf-001',
+    userId: 'usr-001',
+    title: '⚡ Recarga gratuita disponível!',
+    message: 'Você tem 1 recarga gratuita essa semana. Reserve agora!',
+    type: 'success',
+    read: false,
+    createdAt: '2025-04-28T08:00:00',
+  },
+  {
+    id: 'ntf-002',
+    userId: 'usr-001',
+    title: '🕐 Lembrete de reserva',
+    message: 'Sua recarga no VoltHub Centro é amanhã às 14h. Não perca!',
+    type: 'info',
+    read: false,
+    createdAt: '2025-04-28T07:00:00',
+  },
+  {
+    id: 'ntf-003',
+    userId: 'usr-001',
+    title: '💸 Horário econômico disponível',
+    message: 'Recargas 37% mais baratas entre 23h e 6h. Reserve agora!',
+    type: 'warning',
+    read: true,
+    createdAt: '2025-04-27T20:00:00',
+  },
+];
+
+export const mockAnalytics: AnalyticsData = {
+  vehicleUtilization: 74.2,
+  stationOccupancy: 68.5,
+  noShowRate: 8.3,
+  avgConsumptionPerDriver: 18.4,
+  revenuePerAsset: 1240,
+  totalRevenue: 47850,
+  peakHours: [7, 8, 9, 17, 18, 19, 20],
+  weeklyRevenue: [
+    { day: 'Seg', revenue: 6200 },
+    { day: 'Ter', revenue: 7100 },
+    { day: 'Qua', revenue: 6800 },
+    { day: 'Qui', revenue: 8400 },
+    { day: 'Sex', revenue: 9200 },
+    { day: 'Sáb', revenue: 5900 },
+    { day: 'Dom', revenue: 4250 },
+  ],
+  assetPerformance: [
+    { name: 'Tesla M3', utilization: 78, revenue: 4900 },
+    { name: 'BYD Dolphin', utilization: 92, revenue: 5720 },
+    { name: 'Fiat Argo', utilization: 65, revenue: 3800 },
+    { name: 'GWM Ora', utilization: 83, revenue: 4260 },
+    { name: 'Bolt EV', utilization: 41, revenue: 2050 },
+    { name: 'HB20 E', utilization: 71, revenue: 3650 },
+  ],
+  insights: [
+    'BYD Dolphin tem 92% de ocupação — considere expandir frota similar',
+    'Noite de domingo tem 34% ociosidade — ative desconto de 20%',
+    'VoltHub Leste está saturado nos picos — sugira redistribuição',
+    'No-show rate caiu 2.1% após aviso de multa no checkout',
+  ],
+};
+
+export const pricingConfig: PricingConfig = {
+  basePricePerKwh: 0.9,
+  peakMultiplier: 1.55,
+  offPeakDiscount: 0.37,
+  noShowPenalty: 0.5,
+  freeCancelHours: 4,
+};
